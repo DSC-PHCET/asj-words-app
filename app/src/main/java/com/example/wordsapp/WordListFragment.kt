@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wordsapp.databinding.FragmentWordListBinding
 
+private lateinit var letterId: String
 
 class WordListFragment : Fragment() {
 
@@ -38,14 +39,22 @@ class WordListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = binding.recyclerView
-        val letterId = activity?.intent?.extras?.getString(LETTER).toString()
-        recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
-        recyclerView.adapter = WordAdapter(letterId, this.requireContext())
+        //val letterId = activity?.intent?.extras?.getString(LETTER).toString()
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = WordAdapter(letterId, requireContext())
 
         recyclerView.addItemDecoration(
             DividerItemDecoration(this.requireContext(), DividerItemDecoration.VERTICAL)
         )
 
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            letterId = it.getString(LETTER).toString()
+        }
     }
 
     override fun onDestroyView() {
